@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     private float _speed = 6.5f;
     private float _canFire, _fireRate = 0.275f;
+    private Animator animator;
+    private float lastHorizontalInput = 0;
     
     [SerializeField]
     private int _lives = 3;
@@ -13,6 +15,11 @@ public class PlayerController : MonoBehaviour
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _explosionPrefab;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -33,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
         float currentX = transform.position.x;
         float currentY = transform.position.y;
+
+        AnimatePlayer(horizontalInput);
         
         if(currentX < -2.423f)
         {
@@ -44,6 +53,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void AnimatePlayer(float horizontalInput)
+    {
+
+        if (horizontalInput < 0 && lastHorizontalInput >= 0)
+        {
+            animator.Play("Player_BL_anim");
+        }
+        else if (horizontalInput > 0 && lastHorizontalInput <= 0)
+        {
+            animator.Play("Player_BR_anim");
+        }
+        else if (horizontalInput == 0 && lastHorizontalInput != 0)
+        {
+            animator.Play("Player_anim");
+        }
+
+        lastHorizontalInput = horizontalInput;
+    }
 
     void FireLaser()
     {
