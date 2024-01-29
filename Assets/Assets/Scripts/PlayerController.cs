@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float _speed = 6.5f;
-    private float _canFire, _fireRate = 0.275f;
+    private float _canFire, _fireRate = 0.25f;
     private Animator animator;
     private float lastHorizontalInput = 0;
     
